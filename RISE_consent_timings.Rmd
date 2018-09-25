@@ -1,0 +1,51 @@
+---
+title: "RISE Household Consent Survey - Timings"
+author: "Makassar Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+
+```{r setup, include=FALSE}
+setwd("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/2.Consent and House ID/2. ID/2. Data/2. code") 
+
+library (tidyverse)
+library (lubridate)
+
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE) #this stops warnings from displaying in html
+source("consentid-summary report.R")
+```
+
+#Consent survey timings
+
+```{r Table.1, echo=FALSE, results='asis'}
+library (knitr)
+kable (survey.duration, align = c ('c','c','c','c'), caption = "**Duration when someone at home**")
+```
+
+
+```{r Table.2, echo=FALSE, results='asis'}
+library (knitr)
+kable (hhd.duration, align = c ('c','c','c','c'), caption = "**Time to complete consent form 1 - household consent**")
+```
+
+
+```{r Table.3, echo=FALSE, results='asis'}
+library (knitr)
+kable (child.duration, align = c ('c','c','c','c'), caption = "**Time to complete consent form 3 - child consent**")
+```
+
+```{r Table.4, echo=FALSE, results='asis'}
+library (knitr)
+kable (barcode.duration, align = c ('c','c','c','c'), caption = "**Time to complete barcode installation**")
+```
+
+```{r Table.5, echo=FALSE, results='asis'}
+library (knitr)
+kable (all.surveys.duration, align = c ('c','c','c','c'), caption = "**All surveys**")
+```
+
+

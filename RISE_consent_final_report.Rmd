@@ -1,0 +1,169 @@
+---
+title: "RISE Consent and House Numbering Final Report - Indonesia"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+setwd ("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/2.Consent and House ID/2. ID/2. Data/2. code") 
+
+library (tidyverse)
+library (lubridate)
+
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE) #this stops warnings from displaying in html
+source ("consentid-summary report.R")
+```
+
+#Introduction
+The household consent and house numbering process commenced in Makassar on `r start` and was completed on `r end`. The report is divided into the three components of the survey: household consent, child sampling consent, and house barcoding. As per RISE standards/ definitions, a house was a physical, self-contained structure. Within a house, there could be more than one household consenting to the RISE project. Within a house, there could also be more than one parent/guardian and therefore more than one completed child sampling consent form. 
+
+In general, the Community Field Workers (CFW) aimed to follow these rules:
+
+* one barcode per house (physical structure)
+  - one consent form per household
+  - one child consent form per parent/guardian/caregiver
+
+Each house was approached up to three separate times. If no adult was available, CFWs spoke to other occupants or neighbours to obtain permission to install the house barcode.
+
+
+#Household Consent - Summary 
+A total of `r table.all.comm$houses.approached[13]` houses have been approached (Figure 1), across all 12 settlements, and the household consent process was undertaken with `r nrow(at.home.comm)` houses that had an adult occupant at home who was available to speak with RISE. Field workers have completed a total of `r sum (house.visits$count)` house visits (including all return/repeat visits), for an average of `r round (mean (house.visits$count), digits=1)` visit(s) per house. 
+
+```{r Figure.1, echo=FALSE, include=TRUE, results="hide"}
+ggplot (table.all.comm[1:12,], aes (x = community_name, y = houses.approached)) +
+  geom_bar (stat = "identity") + 
+  xlab ("Community") + ylab ("# houses") +
+  theme_minimal () + #remove grey background
+  theme (panel.grid = element_blank (),              # No underlying grid lines
+        axis.text.x = element_text (angle = 90, vjust = 0.5, hjust = 0)) +  # rotated x-axis text 
+  ggtitle("Figure 1: Number of houses approached - by community")  # Number of houses visited in each community
+
+```
+
+A total of `r table.all.comm$no.hhd.consents[13]` household consent forms have been signed (Table 1) with at least one item consented to (representing `r nrow(summ.hhd.consent)` houses or `r round((nrow(summ.hhd.consent)/table.all.comm$houses.approached[13])*100, digits=1)`% of houses approached). `r table.all.comm$no.hhd.refusals[13]` households refused to participate in the study (representing `r sum (refuse$refuse)` houses), `r table.all.comm$house.vacant[13]` houses were vacant, and at `r table (hhd.reasons.no$home, hhd.reasons.no$vacant) [1,1]`  houses there was no one home at any of the visits. Note: these numbers will not sum as there are multiple households within individual houses. Household consents by consent item are shown in Table 2. 
+
+```{r Table.1, echo=FALSE, results='asis'}
+library (knitr)
+kable (Table1, align = c ('l','c','c','c','c'), caption = "**Table 1. Household consents**")
+```
+
+
+
+```{r Table.2, echo=FALSE, results='asis'}
+library (knitr)
+kable (hhd.consents.indiv, align = c ('l','c','c','c','c','c','c','c','c','c','c'), caption = "**Table 2. Household consents - individual items**")
+```
+
+###Note:
+Consents are as follows:   
+c1 = Participation in the 5-year research program, which will include an engineering intervention either during the research program (intervention group - tranche 1) or 2 years later at the end of the study ('control' group - tranche 2).  
+c2 = We will attach an identifying number to the outside of your house to help researchers identify your household when they conduct their visits.  
+c3 = My household taking part in surveys to be administered 3-monthly at my home over the period 2018 - 2022.  
+c4 = Collection of samples of water, wastewater, soil and other objects or surfaces in or around my home.  
+c5 = Photography of household water storage vessels / household items / house exterior during surveying or when environmental samples are collected.  
+c6 = If requested, allow attachment of temperature monitoring devices ("i-buttons") inside or around my home.  
+c7 = If requested, allow mosquito traps to be installed inside or around my home.  
+c8 = If requested, allow trapping of rodents or rodent activity monitoring around my home.  
+c9 = Allowing researchers to contact me if I leave the settlement and move to live elsewhere.  
+c10 = Allowing researchers to contact me after extreme events (such as extreme climatic events) that might impact on my home.  
+c11 = Allowing researchers to contact me to invite me to participate in SMS surveys that may arise during the study period.
+
+\newline
+
+
+#Child Sampling Consent - Summary
+Of the `r table.all.comm$houses.approached[13]` houses visited, `r sum (houses.children$count)` contained children (`r round((sum (houses.children$count)/table.all.comm$houses.approached[13])*100, digits = 1)`%; refer to Appendix 1 for full list of houses with children under 5 years old). A total of `r table.all.comm$no.child.consents[13]` child sampling consent forms were signed with at least one item consented to (Table 3); `r table.all.comm$no.child.refusals[13]` parent(s)/guardian(s) refused to participate in the child sampling component of the study (`r round((table.all.comm$no.child.refusals[13]/sum (houses.children$count))*100, digits = 1)`% of houses with children) and `r nrow(parent.not.available)` was/were not available. A total of `r table.all.comm$no.children.consented[13]` children were consented to at least one item. Total numbers of children consented to each item are shown in Table 4 (`r sum(child.consents.indiv$fecal)` for feces, `r sum(child.consents.indiv$blood)` for blood, and `r sum(child.consents.indiv$height.weight)` for height and weight).
+
+```{r Table.3, echo=FALSE, results='asis'}
+library (knitr)
+kable (Table3, align = c ('l','c','c','c'), caption = "**Table 3. Child consents**")
+```
+
+\newline
+
+```{r Table.4, echo=FALSE, results='asis'}
+library (knitr)
+kable (child.consents.indiv, align = c ('l','c','c','c','c','c','c'), caption = "**Table 4. Child consents - individual items**")
+```
+
+##Child Details
+Of the `r table.all.comm$no.children.consented[13]` children consented, `r round((sum(child_demog$female)/(sum(child_demog$female) + sum(child_demog$male)))*100, digits = 1)`% are female (Table 5). GenderNA indicates that data was missing.
+
+```{r Table.5, echo=FALSE, results='asis'}
+library (knitr)
+kable (Table6[,1:4], align = c ('l','c','c','c','c','c','c'), caption = "**Table 5. Child consents by gender**")
+```
+
+Overall, there were `r sum(Table9$age0_6mo)` consented children under 6 months of age, `r sum(Table9$age6mo_2yr)` consented children between 6 months and 2 years of age, and `r sum(Table9$age2yr_5yr)` consented children between 2 and 5 years of age (Figure 2).
+
+```{r Figure.2, echo=FALSE, include=TRUE, results="hide"}
+ggplot(data = Table9_long, aes(x = community_name, y = number.of.children, fill = age)) + 
+  geom_bar(stat = "identity") + 
+  xlab ("Settlement") + ylab ("# children") +
+  scale_fill_brewer(palette = "Greys") + 
+  theme_minimal () + #remove grey background
+  theme (panel.grid = element_blank (),              # No underlying grid lines
+         axis.text.x = element_text (angle = 90, vjust = 0.5, hjust = 0)) +  # rotated x-axis text 
+  ggtitle("Figure 2: Consented children by age and settlement") 
+
+```
+
+#House Barcoding - Summary
+Of the `r table.all.comm$houses.approached[13]` houses visited, `r table.all.comm$barcode.installed[13]` had a barcode installed (Table 6). `r table.all.comm$barcode.refuse[13]` house(s) refused to be barcoded.
+
+
+```{r Table.6, echo=FALSE, results='asis'}
+library (knitr)
+kable (Table5, align = c ('l','c','c','c','c'), caption = "**Table 6. House barcodes installed**")
+```
+
+
+#Survey timings
+When someone was at home, the household consent surveys were completed in `r round(mean(home.times$duration/60), digits=1)` minutes on average (minimum = `r round(min(home.times$duration/60), digits=1)` , maximum = `r round(max(home.times$duration/60), digits=1)`. On average, it took `r round(mean(hhd.consent.merge.times$duration1), digits=1)` minutes to complete form 1, `r round(mean(all.survey.times$duration2), digits=1)` minutes to complete form 3, and `r round(mean(barcode.times$duration3), digits=1)` minutes to complete barcode installation. Refer to Appendix 2 for timings by settlement. Note: these times reflect the time stamps within the survey only and do not reflect the true duration of each of the activities.
+
+
+
+
+
+
+
+
+#APPENDIX 1: List of all houses with children <5
+
+```{r Table.10, echo=FALSE, results='asis'}
+library (knitr)
+kable (appendix1, align = c ('l','c','c'), caption = "**Appendix 1. List of all houses that have children less than 5 years old**")
+```
+
+#APPENDIX 2: Survey timings
+```{r Table.11, echo=FALSE, results='asis'}
+library (knitr)
+kable (home.times.comm, align = c ('l','c','c','c'), caption = "**Appendix 2a. Duration when someone at home**")
+```
+
+
+```{r Table.12, echo=FALSE, results='asis'}
+library (knitr)
+kable (hhd.duration.comm, align = c ('l','c','c','c'), caption = "**Appendix 2b. Time to complete consent form 1 - household consent**")
+```
+
+
+```{r Table.13, echo=FALSE, results='asis'}
+library (knitr)
+kable (child.duration.comm, align = c ('l','c','c','c'), caption = "**Appendix 2c. Time to complete consent form 3 - child consent**")
+```
+
+```{r Table.14, echo=FALSE, results='asis'}
+library (knitr)
+kable (barcode.duration.comm, align = c ('l','c','c','c'), caption = "**Appendix 2d. Time to complete barcode installation**")
+```
+
+#APPENDIX 3: Number of household consents per house
+```{r Table.15, echo=FALSE, results='asis'}
+library (knitr)
+kable (no.hhd.consents, caption = "**Appendix 3. Number of household consents per house**")
+```
+

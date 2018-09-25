@@ -1,0 +1,55 @@
+---
+title: "RISE Household Consent Survey - Daily QC"
+author: "Makassar Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+
+```{r setup, include=FALSE}
+setwd("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/2.Consent and House ID/2. ID/2. Data/2. code") 
+
+library (tidyverse)
+library (lubridate)
+
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE) #this stops warnings from displaying in html
+source("consentid-dailyqc.R")
+```
+
+#Daily QC/Verification for Household Consent Survey (Makassar) - `r day.qc`
+The community(ies) visited today were: `r communities.list`
+
+
+
+```{r Table.1, echo=FALSE, results='asis'}
+library (knitr)
+kable (by.comm, align = c ('l','c','c','c','c','c','c','c', 'c'), caption = "**Table 1. Daily Checks - by community**")
+```
+
+
+#Survey times
+For the `r nrow (subhhd.merge.times)` houses where someone was home, the consent surveys were completed in `r round(mean(subhhd.merge.times$duration/60), digits=1)` minutes on average (min = `r round(min(subhhd.merge.times$duration/60), digits=1)`, max = `r round(max(subhhd.merge.times$duration/60), digits=1)`). 
+
+On average, it took `r round(mean(subhhd.consent.merge.times$duration1), digits=1)` minutes to complete Form 1 - Household Consent (min = `r round(min(subhhd.consent.merge.times$duration1), digits=1)`, max = `r round(max(subhhd.consent.merge.times$duration1), digits=1)`), `r round(mean(survey.times$duration2), digits=1)` minutes to complete Form 3 - Child Consent (min = `r round(min(survey.times$duration2), digits=1)`, max = `r round(max(survey.times$duration2), digits=1)`), and `r round(mean(barcode.times$duration3), digits=1)` minutes to complete barcode installation (min = `r round(min(barcode.times$duration3), digits=1)`, max = `r round(max(barcode.times$duration3), digits=1)`).
+
+
+#Errors
+
+A total of `r sum(check1$check2, na.rm = TRUE)` entry error(s) occurred where a household consent form was completed, but it was reported that no households agreed to participate (see table below). There could be an error in consenting children in these houses as the field worker would not have been prompted for completion of child consent form 3. 
+
+```{r Table.2, echo=FALSE, results='asis'}
+library (knitr)
+kable (check_participate, align = c ('l','c'), caption = "**Houses with possible errors in child consent**")
+```
+
+There were `r nrow (barcodes)` mismatch(es) between the scanned house barcode number and the entered house number (see below). These need to be double-checked with the Field Supervisor.
+
+```{r Table.3, echo=FALSE, results='asis'}
+library (knitr)
+kable (barcodes, align = c ('l','c'), caption = "**Mismatch between barcode scan and house number**")
+```
+
+

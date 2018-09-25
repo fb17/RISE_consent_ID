@@ -1,0 +1,95 @@
+---
+title: "RISE Household Consent Survey - Supervisor Report"
+author: "Makassar Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+# setwd("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/2.Consent and House ID/2. ID/2. Data/2. code") 
+setwd("C:/Users/Fiona Barker/Dropbox/work/ID trip/Consent data analysis/code")
+
+library (tidyverse)
+library (lubridate)
+
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE) #this stops warnings from displaying in html
+source("consentid-summary report.R")
+```
+
+## Supervisor Summary Report for Household Consent Survey (Makassar)
+
+```{r Table.0, echo=FALSE, results='asis'}
+library (knitr)
+kable (table.all.comm, align = c ('l','c','c','c','c','c','c','c'), caption = "**Overview of all communities**")
+```
+
+
+
+```{r Table.1, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgLempangang, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Lempangang**")
+```
+
+```{r Table.2, echo=FALSE, results='asis'}
+library (knitr)
+kable (KawasanUntia, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kawasan Untia**")
+```
+
+```{r Table.3, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgNelayanBarombong, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Nelayan, Barombong**")
+```
+
+```{r Table.4, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgBonelengga, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Bonelengga**")
+```
+
+```{r Table.5, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgTunasJaya, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Tunas Jaya**")
+```
+
+```{r Table.6, echo=FALSE, results='asis'}
+library (knitr)
+kable (JlBarawaja2Pampang, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Jl Barawaja 2, Pampang**")
+```
+
+```{r Table.7, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgCedde, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Cedde**")
+```
+
+```{r Table.8, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgGampangcayyaTallo, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Gampangcayya, Tallo**")
+```
+
+```{r Table.9, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgBambuBambuJlBirta, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Bambu-Bambu, Jl Birta**")
+```
+
+```{r Table.10, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgBaruAntang, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Baru, Antang**")
+```
+
+```{r Table.11, echo=FALSE, results='asis'}
+library (knitr)
+kable (JlBorongRayaBaru, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Jl Borong Raya Baru**")
+```
+
+```{r Table.12, echo=FALSE, results='asis'}
+library (knitr)
+kable (KgAllaAlla, align = c ('l','c','c','c','c','c','c','c'), caption = "**Summary Sheet for Kg Alla-Alla**")
+```
+         
+
+
+
+
+
+
